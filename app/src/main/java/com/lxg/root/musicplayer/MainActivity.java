@@ -7,21 +7,29 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import javax.xml.datatype.Duration;
+
 public class MainActivity extends AppCompatActivity {
     private ListView listview;
     private RelativeLayout ll;
+    ImageView iv;
+    Animation du;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         listview=(ListView)findViewById(R.id.listview);
         ll=(RelativeLayout)findViewById(R.id.linearLayout);
+        iv=(ImageView)findViewById(R.id.imageview);
         BaseAdapter ba=new BaseAdapter() {
             @Override
             public int getCount() {
@@ -51,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         listview.setAdapter(ba);
+        du= AnimationUtils.loadAnimation(MainActivity.this,R.anim.animation);
+        iv.setAnimation(du);
     }
 
     @Override
