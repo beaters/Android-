@@ -11,8 +11,13 @@
         android:fromYDelta="-80"
         android:toYDelta="200"
         android:duration="2000"/>
-    <alpha
-        android:fromAlpha="100"
-        android:toAlpha="20"/>
-
+    <scale
+        android:fromXScale="0"
+        android:toXScale="300"
+        android:fromYScale="-80"
+        android:toYScale="200"
+        android:duration="2000"
+        android:pivotX="20"
+        android:pivotY="100"
+        android:interpolator="@android:anim/linear_interpolator"/>
 </set>

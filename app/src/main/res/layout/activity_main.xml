@@ -28,8 +28,8 @@
     <ListView
         android:background="@android:color/white"
         android:id="@+id/listview"
-        android:layout_width="300dp "
+        android:layout_width="240dp "
         android:layout_height="fill_parent"
-        android:layout_gravity="left"
+        android:layout_gravity="right"
         />
 </android.support.v4.widget.DrawerLayout>
