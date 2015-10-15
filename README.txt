@@ -1,1 +1,1 @@
-本程序是android应用,重点研究了android.support.v4.widget下的DeawerLayout及其相关类的实现
+本程序是android应用,主要实现android音乐播放器必备的组件
