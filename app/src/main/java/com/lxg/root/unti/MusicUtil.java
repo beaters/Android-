@@ -15,7 +15,7 @@ import java.util.List;
  * Created by root on 15-10-7.
  */
 public class MusicUtil {
-    private static final Uri uri= Uri.parse("MediaStore.Audio.Media.EXTERNAL_CONTENT_URI");
+    private static final Uri uri= MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
     private Context context;
     private String [] projection=new String []
             {
@@ -27,23 +27,30 @@ public class MusicUtil {
     {
         this.context=context;
     }
+
+    //获取音乐相关信息
     public List<musicInfo> getInfo()
     {
         ContentResolver cr=context.getContentResolver();
         Cursor cursor=cr.query(uri, projection, null, null, null);
-        List<musicInfo> list=
+        List<musicInfo> list=getInfo(cursor);
+        return list;
     }
-    public List<musicInfo> getInfo(Cursor cursor)
-    {
-        if(cursor==null)
-        {
+
+
+   //解析获取的cursor
+    public List<musicInfo> getInfo(Cursor cursor) {
+        if (cursor == null) {
             return null;
         }
-        ArrayList<musicInfo> arr=new ArrayList<musicInfo>();
-        while (cursor.moveToNext())
-        {
-            musicInfo music=new musicInfo();
-            music.
+        ArrayList<musicInfo> arr = new ArrayList<musicInfo>();
+        while (cursor.moveToNext()) {
+            musicInfo music = new musicInfo();
+            music._id = Integer.parseInt(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media._ID)));
+            music.data = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA));
+            music.duration = Integer.parseInt(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION)));
+            arr.add(music);
         }
+        return arr;
     }
 }

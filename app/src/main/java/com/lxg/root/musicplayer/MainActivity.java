@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,65 +20,101 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.lxg.root.model.musicInfo;
+import com.lxg.root.unti.MusicUtil;
+
 import org.w3c.dom.Text;
 
+import java.util.List;
 import java.util.zip.Inflater;
 
 import javax.xml.datatype.Duration;
 
 public class MainActivity extends Activity {
-    private ListView listview;
+    private ListView listview,musicListView;
     private RelativeLayout ll;
     ImageView iv;
-    Animation du;
+    private View view;
+
+    private List<musicInfo> music;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Drawable drawable=getBaseContext().getDrawable(R.drawable.test);
 
         setContentView(R.layout.activity_main);
         listview=(ListView)findViewById(R.id.listview);
+        musicListView=(ListView)findViewById(R.id.musicList);
         ll=(RelativeLayout)findViewById(R.id.linearLayout);
         iv=(ImageView)findViewById(R.id.imageview);
         TextView tv=(TextView)findViewById(R.id.exit);
-        final View view=getLayoutInflater().inflate(R.layout.listview_layout,null);
-        BaseAdapter ba=new BaseAdapter() {
-            @Override
-            public int getCount() {
-                return 1;
-            }
+        view=getLayoutInflater().inflate(R.layout.listview_layout,null);
 
-            @Override
-            public Object getItem(int position) {
-                return null;
-            }
+        music=new MusicUtil(getApplicationContext()).getInfo();  //获取music列表
 
-            @Override
-            public long getItemId(int position) {
-                return position;
-            }
+        /*
+        * set the Adapter to the lists
+        * */
 
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                return view;
-            }
-        };
-        listview.setAdapter(ba);
-        du= AnimationUtils.loadAnimation(MainActivity.this,R.anim.animation);
-        iv.setAnimation(du);
+        listview.setAdapter(new leftAddapter());
+        musicListView.setAdapter(new MyAdapter());
     }
 
-    public void test(TextView tv,Drawable dr)
+
+    public class MyAdapter extends BaseAdapter
     {
-        dr.setBounds(0,0,dr.getMinimumWidth(),dr.getMinimumHeight());
-        tv.setCompoundDrawables(dr,null,null,null);
+        @Override
+        public int getCount() {
+            return music.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            LinearLayout linearLayout=new LinearLayout(getApplicationContext());
+            linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+
+        }
+    }
+
+    public class leftAddapter extends BaseAdapter
+    {
+        @Override
+        public int getCount() {
+            return 1;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            return view;
+        }
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        // Inflate the menu; this adds items to the action bar if it is present
+        getMenuInflater().inflate(R.menu.menu_main,menu);
+
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -87,10 +124,20 @@ public class MainActivity extends Activity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+       switch(id)
+       {
+           case R.id.action_settings:
+
+
+
+               break;
+           case R.id.exit:
+               System.exit(0);
+               break;
+       }
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }
