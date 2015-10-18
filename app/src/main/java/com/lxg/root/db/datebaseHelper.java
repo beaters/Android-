@@ -53,9 +53,7 @@ public class datebaseHelper extends SQLiteOpenHelper {
         db.execSQL("create table "
                 + TABLE_ARTIST
                 + "(_id INTEGER PRIMARY KEY AUTOINCREMENT, artist_name char, number_of_tracks integer)");
-        db.execSQL("create table "
-                + TABLE_FOLDER
-                + "(_id INTEGER PRIMARY KEY AUTOINCREMENT, folder_name char, folder_path char)");
+
         db.execSQL("create table "
                 + TABLE_FAVORITE
                 + " (_id integer,"

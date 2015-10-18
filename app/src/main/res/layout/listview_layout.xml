@@ -30,32 +30,44 @@
                />
        </RelativeLayout>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="更换背景"
+        android:textSize="25sp"
+        android:textColor="@android:color/black"
+        android:layout_below="@string/layout"
+        android:layout_alignParentLeft="true"
+
+        />
     <TextView
         android:id="@string/text1"
         android:layout_width="fill_parent"
         android:layout_height="40dp"
-        android:text="Scan the music "
-        android:textSize="25dp"
+        android:text="扫描音乐 "
+        android:textSize="25sp"
         android:textColor="@android:color/black"
-        android:layout_below="@string/layout"
+        android:layout_below="@id/background"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
-
     <TextView
         android:id="@string/text2"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:text="Setting"
+        android:text="设置"
         android:textSize="25dp"
         android:textColor="@android:color/black"
         android:layout_below="@string/text1"
         />
+
     <TextView
         android:id="@+id/exit"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_below="@string/text2"
-        android:text="Exit"
+        android:text="退出"
         android:textSize="25dp"
         android:textColor="@android:color/black"
         />

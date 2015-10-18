@@ -1,42 +1,37 @@
 package com.lxg.root.musicplayer;
 
 import android.app.Activity;
-import android.graphics.drawable.Drawable;
-import android.support.v4.widget.TextViewCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lxg.root.model.musicInfo;
+import com.lxg.root.service.musicService;
 import com.lxg.root.unti.MusicUtil;
 
-import org.w3c.dom.Text;
 
 import java.util.List;
-import java.util.zip.Inflater;
 
-import javax.xml.datatype.Duration;
-
+/*
+* @author lxg
+* */
 public class MainActivity extends Activity {
+    public static int music_state=0; //0表示不在播放,1表示正在播放
     private ListView listview,musicListView;
     private RelativeLayout ll;
     ImageView iv;
     private View view;
-
+    private ImageButton last,next,start;
     private List<musicInfo> music;
+    private TextView musicName,musician;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +43,12 @@ public class MainActivity extends Activity {
         iv=(ImageView)findViewById(R.id.imageview);
         TextView tv=(TextView)findViewById(R.id.exit);
         view=getLayoutInflater().inflate(R.layout.listview_layout,null);
+        musicName=(TextView)findViewById(R.id.MusicName);
+        musician=(TextView)findViewById(R.id.Musician);
+
+        last=(ImageButton)findViewById(R.id.last);
+        next=(ImageButton)findViewById(R.id.next);
+        start=(ImageButton)findViewById(R.id.start_stop);
 
         music=new MusicUtil(getApplicationContext()).getInfo();  //获取music列表
 
@@ -57,6 +58,7 @@ public class MainActivity extends Activity {
 
         listview.setAdapter(new leftAddapter());
         musicListView.setAdapter(new MyAdapter());
+        start.setOnClickListener(new StartListener());
     }
 
 
@@ -79,9 +81,11 @@ public class MainActivity extends Activity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            LinearLayout linearLayout=new LinearLayout(getApplicationContext());
-            linearLayout.setOrientation(LinearLayout.HORIZONTAL);
-
+            View view=getLayoutInflater().inflate(R.layout.music_list,parent);
+            musicName.setText(music.get(position).musicName);
+            musician.setText(music.get(position).artist+"-"+music.get(position).album);
+            view.setOnClickListener(new Play());
+            return view;
         }
     }
 
@@ -111,11 +115,25 @@ public class MainActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present
         getMenuInflater().inflate(R.menu.menu_main,menu);
-
+        menu.add(0,0,1,"exit");
+        menu.getItem(0).setIcon(R.drawable.exit);
         return true;
     }
 
 
+    public class Play implements View.OnClickListener
+    {
+        @Override
+        public void onClick(View v)
+        {
+            new musicService(getApplicationContext()).playByPosition(v.getId());
+            changeState();
+        }
+    }
+    public void change_BG()
+    {
+
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -126,11 +144,6 @@ public class MainActivity extends Activity {
         //noinspection SimplifiableIfStatement
        switch(id)
        {
-           case R.id.action_settings:
-
-
-
-               break;
            case R.id.exit:
                System.exit(0);
                break;
@@ -139,5 +152,27 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+
+    public class StartListener implements View.OnClickListener
+    {
+        @Override
+        public void onClick(View v)
+        {
+            if(music_state==0)
+            {
+                start.setImageResource(R.drawable.music_play_button);
+                new musicService(getApplicationContext()).playByPosition();
+            }
+        }
+    }
+    public void changeState()
+    {
+        if(music_state==0)
+        {
+            start.setImageResource(R.drawable.music_play_button);
+        }else {
+            start.setImageResource(R.drawable.music_pause_button);
+        }
+    }
 
 }

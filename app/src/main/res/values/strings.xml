@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MusicPlayer</string>
+    <string name="app_name">Beaters</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -155,4 +155,5 @@
         <color name="darkblue">#00008B</color><!--暗蓝色 -->
         <color name="navy">#000080</color><!--海军色 -->
         <color name="black">#000000</color><!--黑色 -->
+        <color name="q_black">#f0020312</color><!--淡黑色-->
 </resources>

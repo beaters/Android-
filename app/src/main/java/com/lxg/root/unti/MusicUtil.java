@@ -21,7 +21,7 @@ public class MusicUtil {
             {
                 MediaStore.Audio.Media._ID,MediaStore.Audio.Media.TITLE,
                 MediaStore.Audio.Media.DATA, MediaStore.Audio.Media.ARTIST,
-                    MediaStore.Audio.Media.ALBUM_ID
+                    MediaStore.Audio.Media.ALBUM
     };
     public MusicUtil(Context context)
     {
@@ -45,10 +45,13 @@ public class MusicUtil {
         }
         ArrayList<musicInfo> arr = new ArrayList<musicInfo>();
         while (cursor.moveToNext()) {
+            String album=cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM));
             musicInfo music = new musicInfo();
             music._id = Integer.parseInt(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media._ID)));
             music.data = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA));
             music.duration = Integer.parseInt(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION)));
+            music.musicName=cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE));
+            music.album=(album==null?null:album);
             arr.add(music);
         }
         return arr;
